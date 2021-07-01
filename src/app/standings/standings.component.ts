@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Component, OnInit, Input, Injectable, Inject } from '@angular/core';
 import { StandingsListsEntity } from '../model/models';
+import {StandingsService} from '../standings/standings.service'
 const fetch = require('node-fetch');
 
 
@@ -12,28 +13,14 @@ const fetch = require('node-fetch');
 export class StandingsComponent implements OnInit {
   roundStandings: StandingsListsEntity[] = [];
   season: number
-  constructor(season: number) {
+  constructor(@Inject(`season`) season: number, private standingsService : StandingsService) {
     this.season = season;
    }
 
   ngOnInit(): void {
-    getStandings(this.season).then(value => {this.roundStandings});
+    this.standingsService.getStandings(this.season).then(value => {this.roundStandings});
+    
   }
   
 
-}
-async function getStandings(season: number){
-  var url = `http://ergast.com/api/f1/${season}/driverStandings.json`;
-  var response = await fetch(url);
-  var body = await response.json();
-
-  var value = body.MRData.StandingsTable.StandingsLists;
-  var round:number = +value[0].round;
-  for (let index = round-1; index > 0; index--) {
-    var url = `http://ergast.com/api/f1/${season}/${index}/driverStandings.json`;
-    var response = await fetch(url);
-    var body = await response.json();
-    value.push(...body.MRData.StandingsTable.StandingsLists);
-  }
-  return value;
 }
