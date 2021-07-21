@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { YearPickerComponent } from 'src/app/year-picker/year-picker.component';
+import { StandingsComponent } from '../standings.component'
 
 @Component({
   selector: 'app-table',

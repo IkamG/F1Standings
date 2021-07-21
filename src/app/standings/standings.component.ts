@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Injectable, Inject } from '@angular/core';
+import { Component, OnInit, Input, Injectable, Inject, NgModule } from '@angular/core';
 import { StandingsListsEntity } from '../model/models';
 import {StandingsService} from '../standings/standings.service'
+
 const fetch = require('node-fetch');
+
 
 
 @Component({
