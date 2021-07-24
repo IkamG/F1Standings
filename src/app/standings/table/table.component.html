@@ -1,4 +1,7 @@
 <p>table works!</p>
 <div class="mat-app-background basic-container">
-    <app-year-picker></app-year-picker>
+    <app-year-picker
+    (change)="test($event)">
+    </app-year-picker>
+    <span>{{Standings.season}}</span>
 </div>

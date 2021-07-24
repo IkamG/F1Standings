@@ -15,7 +15,8 @@ const fetch = require('node-fetch');
 export class StandingsComponent implements OnInit {
   roundStandings: StandingsListsEntity[] = [];
   season: number
-  constructor(@Inject(`season`) season: number, private standingsService : StandingsService) {
+  standingsService : StandingsService = new StandingsService;
+  constructor(@Inject(`season`) season: number) {
     this.season = season;
    }
 

@@ -1,12 +1,10 @@
-import { NgClass } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NativeDateAdapter, DateAdapter } from '@angular/material/core';
-
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as _moment from 'moment';
 import { default as _rollupMoment } from 'moment';
+
 
 const moment = _rollupMoment || _moment;
 
@@ -30,13 +28,23 @@ class CustomDateAdapter extends NativeDateAdapter {
   ]
 })
 export class YearPickerComponent {
+  
+  @Output() change: EventEmitter<any> = new EventEmitter<any>();
+
   @ViewChild(MatDatepicker) picker : any;
   date = new FormControl();
-  constructor() {}
+  constructor() {
+    this.date.valueChanges.subscribe(value =>{
+      
+    })
+  }
 
   yearSelected(params : any) {
     this.date.setValue(params);
     this.picker.close();
+    this.change.emit({
+      number: this.date.value
+    })
   }
 }
 
