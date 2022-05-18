@@ -1,7 +1,26 @@
-<p>table works!</p>
-<div class="mat-app-background basic-container">
-    <app-year-picker
-    (change)="test($event)">
-    </app-year-picker>
-    <span>{{Standings.season}}</span>
+<div *ngIf="chartLoading" id="chart-parent">
+    <ngx-charts-line-chart style="height: 100%"
+      #chart
+      id="chart-child"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [roundDomains]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      xAxisLabel="Round"
+      yAxisLabel="Position"
+      [results]="tableData"
+      [legendTitle]="'Drivers'"
+      (select)="onActivate($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onActivate($event)"
+      [yScaleMin]="numOfDrivers"
+      [yScaleMax]="1"
+      [scheme]="'forest'"
+      [curve]="curve"
+      [customColors]="constructorColors"
+    >
+    <!-- [customColors]="colorSelect()" -->
+    </ngx-charts-line-chart>
 </div>

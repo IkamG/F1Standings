@@ -40,7 +40,7 @@ export class YearPickerComponent {
   }
 
   yearSelected(params : any) {
-    this.date.setValue(params);
+    this.date.setValue(params.value ?? params);
     this.picker.close();
     this.change.emit({
       number: this.date.value

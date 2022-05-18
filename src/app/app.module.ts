@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StandingsComponent } from './standings/standings.component';
@@ -25,6 +26,7 @@ import { MaterialModule } from './material.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxChartsModule,
     MaterialModule
   ],
   providers: [],

@@ -1,4 +1,14 @@
-
+export interface driverData {
+  name : string;
+  series? : raceData[] | null;
+  Driver: Driver;
+  Constructors?: ConstructorsEntity[] | null;
+}
+export interface raceData {
+  value : number;
+  name : string;
+  driverInfo : DriverStandingsEntity;
+}
 export interface Location {
   lat: string;
   long: string;

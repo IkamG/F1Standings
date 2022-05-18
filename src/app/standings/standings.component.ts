@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, Input, Injectable, Inject, NgModule } from '@angular/core';
 import { StandingsListsEntity } from '../model/models';
 import {StandingsService} from '../standings/standings.service'
@@ -14,16 +15,21 @@ const fetch = require('node-fetch');
 
 export class StandingsComponent implements OnInit {
   roundStandings: StandingsListsEntity[] = [];
-  season: number
+  season: number = 2022;
   standingsService : StandingsService = new StandingsService;
-  constructor(@Inject(`season`) season: number) {
-    this.season = season;
-   }
 
   ngOnInit(): void {
-    this.standingsService.getStandings(this.season).then(value => {this.roundStandings});
+    this.fetchStandings();
     
   }
-  
-
+  async fetchStandings (): Promise<StandingsListsEntity[]>{
+    await this.standingsService.getStandings(this.season).then(value => {this.roundStandings = value});
+    return this.roundStandings
+  }
+  SeasonChange (event :any ) {
+    if (event.number){
+      this.season = event.number.getFullYear();
+      this.fetchStandings();
+    }
+  }
 }

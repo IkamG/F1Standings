@@ -1,6 +1,7 @@
 <mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Choose a year" [formControl]="date">
+  <input matInput [matDatepicker]="picker" placeholder="Choose a year" [formControl]="date" (dateChange)="yearSelected($event)">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker (yearSelected)="yearSelected($event)" startView="multi-year"></mat-datepicker>
+  <mat-datepicker #picker  (yearSelected)="yearSelected($event)" startView="multi-year"></mat-datepicker>
 </mat-form-field>
 
+<!-- (change)="yearSelected($event)"    (dateChange)="yearSelected($event)"-->

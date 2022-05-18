@@ -1,10 +1,11 @@
-<p>standings works!</p>
-<tbody>
-    <ng-container *ngFor="let test of roundStandings">
-        <tr>
-            <td>
-                {{test.season}}
-            </td>
-        </tr>
-    </ng-container>
-</tbody>
+<div class="standings-parent">
+    <div class="basic-container">
+        <app-year-picker (change)="SeasonChange($event)"> </app-year-picker>
+    </div>
+    <div class="basic-container">
+        <span>{{ season }}</span>
+    </div>
+    <div class="basic-container table-parent">
+        <standings-table [roundStandings]="roundStandings"></standings-table>
+    </div>
+</div>
