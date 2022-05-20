@@ -6,7 +6,7 @@ export class CustomLinerChartService {
 	 * since it's not supported anymore from ngx chart
 	 */
 
-	showDots(chart:any) {
+	showDots(chart:any) : boolean{
 		let index = 0;
 		const paths = chart.chartElement.nativeElement.getElementsByClassName(
 			'line-series'
@@ -14,9 +14,12 @@ export class CustomLinerChartService {
 		const color = chart.chartElement.nativeElement.getElementsByClassName(
 			'line-highlight'
 		);
-
+		var defsI = chart.chartElement.nativeElement.getElementsByTagName('svg')[0].getElementsByTagName('defs')[0];
+		while(defsI.firstChild){
+			defsI.removeChild(defsI.lastChild)
+		}
 		for (let path of paths) {
-			const chrtColor = color[index].getAttribute('ng-reflect-fill');
+			const chrtColor = "#000000"
 			const pathElement = path.getElementsByTagName('path')[0];
 			const pathAttributes = {
 				'marker-start': `url(#dot${index})`,
@@ -27,6 +30,10 @@ export class CustomLinerChartService {
 			this.setAttributes(pathElement, pathAttributes);
 			index += 1;
 		}
+		if(paths == undefined){
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -54,8 +61,8 @@ export class CustomLinerChartService {
 			viewBox: '0 0 10 10',
 			refX: 5,
 			refY: 5,
-			markerWidth: 5,
-			markerHeight: 5
+			markerWidth: 3,
+			markerHeight: 3
 		};
 
 		const circleAttributes = {
