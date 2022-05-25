@@ -1,26 +1,38 @@
-<div *ngIf="chartLoading" id="chart-parent">
-    <ngx-charts-line-chart style="height: 100%"
-      #chart
-      id="chart-child"
-      [legend]="true"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      [roundDomains]="false"
-      [xAxis]="true"
-      [yAxis]="true"
-      xAxisLabel="Round"
-      yAxisLabel="Position"
-      [results]="tableData"
-      [legendTitle]="'Drivers'"
-      (select)="onActivate($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onActivate($event)"
-      [yScaleMin]="numOfDrivers"
-      [yScaleMax]="1"
-      [scheme]="'forest'"
-      [curve]="curve"
-      [customColors]="constructorColors"
-    >
-    <!-- [customColors]="colorSelect()" -->
-    </ngx-charts-line-chart>
+<div [hidden]="chartLoading" id="chart-parent">
+  <ngx-charts-line-chart
+    style="height: 100%"
+    #chart
+    id="chart-child"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [roundDomains]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    xAxisLabel="Round"
+    yAxisLabel="Position"
+    [results]="tableData"
+    [legendTitle]="'Drivers'"
+    (select)="onActivate($event)"
+    (activate)="onActivate($event)"
+    (deactivate)="onActivate($event)"
+    [yScaleMin]="numOfDrivers"
+    [yScaleMax]="1"
+    [scheme]="'forest'"
+    [curve]="curve"
+    [customColors]="constructorColors"
+  >
+    <ng-template  #tooltipTemplate let-model="model">
+      <div class="tooltipRaceSpan">
+
+        <span  [innerHTML]="singlePoint(model)"></span>
+      </div>
+      
+    </ng-template>
+
+    <!-- <ng-template #seriesTooltipTemplate let-model="model">
+      This is vertical line tooltip template
+      <pre>{{ model | json }}</pre>
+    </ng-template> -->
+  </ngx-charts-line-chart>
 </div>

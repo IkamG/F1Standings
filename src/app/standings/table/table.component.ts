@@ -3,12 +3,14 @@ import { YearPickerComponent } from 'src/app/year-picker/year-picker.component';
 import { StandingsComponent } from '../standings.component';
 import {
   driverData,
+  racePointData,
   StandingsListsEntity,
   StandingsTable,
 } from 'src/app/model/models';
 import { ThrowStmt } from '@angular/compiler';
 import * as shape from 'd3-shape';
 import {CustomLinerChartService} from '../../custom-comps/custom-charts'
+import { TestBed } from '@angular/core/testing';
 @Component({
   selector: 'standings-table',
   templateUrl: './table.component.html',
@@ -33,10 +35,10 @@ export class TableComponent implements OnInit {
     "Lotus":"#FFB800",
     "Alfa Romeo":"#B12039",
     "AlphaTauri":"#4E7C9B",
-    "Alpine":"#2293D1",
+    "Alpine F1 Team":"#2293D1",
     "Aston Martin":"#2D826D",
     "Ferrari":"#ED1C24",
-    "Haas":"#B6BABD",
+    "Haas F1 Team":"#B6BABD",
     "McLaren":"#F58020",
     "Mercedes":"#6CD3BF",
     "Red Bull":"#1E5BC6",
@@ -48,26 +50,29 @@ export class TableComponent implements OnInit {
     this.chartLoading = false;
     this.massageData();
   }
-  ngAfterViewInit() {
-		this.customLinerChartService?.showDots(this.chart);
+  ngAfterViewChecked() {
+    if(!this.dots){
+		  this.dots = this.customLinerChartService?.showDots(this.chart);
+    }
 	}
   massageData(): void {
     this.tableData = [];
     this.roundStandings.forEach((element) => {
       element.DriverStandings?.forEach((driver) => {
-        if (!this.tableData.some((e) => e.name === driver.Driver.familyName)) {
+        if (!this.tableData.some((e) => e.identifier === driver.Driver.driverId)) {
           var intialRace = [
             { value: parseInt(driver.position), name: element.round, driverInfo : driver },
           ];
           this.tableData.unshift({
-            name: driver.Driver.familyName,
+            name: driver.Driver.givenName[0] + " " + driver.Driver.familyName,
             series: intialRace,
+            identifier: driver.Driver.driverId,
             Driver: driver.Driver,
             Constructors: driver.Constructors
           });
         } else {
           let i = this.tableData.findIndex(
-            (e) => e.name === driver.Driver.familyName
+            (e) => e.identifier === driver.Driver.driverId
           );
           var race = { value: parseInt(driver.position), name: element.round, driverInfo : driver };
           this.tableData[i].series?.unshift(race);
@@ -79,7 +84,7 @@ export class TableComponent implements OnInit {
     this.tableData = [...this.tableData.reverse()];
     this.dots = false;
     this.chartLoading = true;
-    this.customLinerChartService?.showDots(this.chart);
+
     return;
   }
 
@@ -88,11 +93,10 @@ export class TableComponent implements OnInit {
   }
 
   onActivate(data: any): void {
-    if(!this.dots){
-      this.colorSelect();
-      this.customLinerChartService?.showDots(this.chart);
-      this.dots = true;
-    }
+    // if(!this.dots){
+    //   this.customLinerChartService?.showDots(this.chart);
+    //   this.dots = true;
+    // }
   }
 
   colorSelect() {
@@ -105,5 +109,9 @@ export class TableComponent implements OnInit {
     this.constructorColors=result;
   } 
   onDeactivate(data: any): void {
+  }
+
+  singlePoint(data: any) : any{
+    return "<span class=\"tooltipDriverName\">" + data.series + "</span><br>" + "<span class=\"tooltipDriverPoints\">" + data.driverInfo.points + " Points </span> <br>" + "Finished Round " +  data.name + " in P" + data.driverInfo.positionText + "\n";
   }
 }

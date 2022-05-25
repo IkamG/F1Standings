@@ -5,8 +5,7 @@ import { BaseAngluarStuffComponent } from './base-angluar-stuff/base-angluar-stu
 import { StandingsComponent } from './standings/standings.component';
 
 const routes: Routes = [
-  {path: 'table', component: StandingsComponent},
-  {path: 'angularstuff', component: BaseAngluarStuffComponent}
+  {path: '', component: StandingsComponent},
 ];
 
 @NgModule({

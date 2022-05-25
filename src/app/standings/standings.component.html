@@ -1,11 +1,16 @@
 <div class="standings-parent">
-    <div class="basic-container">
+  <mat-toolbar color="primary">
+    <span>F1 Standings {{season}}</span>
+    <span class="spacer"></span>
+    <div class="cal-div" style="align-self: flex-end;">
         <app-year-picker (change)="SeasonChange($event)"> </app-year-picker>
-    </div>
-    <div class="basic-container">
-        <span>{{ season }}</span>
-    </div>
-    <div class="basic-container table-parent">
-        <standings-table [roundStandings]="roundStandings"></standings-table>
-    </div>
+      </div>
+  </mat-toolbar>
+
+  <div [hidden]="!fetching" id="chart-parent">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div [hidden]="fetching" class="basic-container table-parent">
+    <standings-table [roundStandings]="roundStandings"></standings-table>
+  </div>
 </div>

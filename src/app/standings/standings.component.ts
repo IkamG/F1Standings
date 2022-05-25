@@ -17,17 +17,20 @@ export class StandingsComponent implements OnInit {
   roundStandings: StandingsListsEntity[] = [];
   season: number = 2022;
   standingsService : StandingsService = new StandingsService;
+  fetching: boolean = true;
 
   ngOnInit(): void {
+    this.fetching = false;
     this.fetchStandings();
-    
   }
   async fetchStandings (): Promise<StandingsListsEntity[]>{
     await this.standingsService.getStandings(this.season).then(value => {this.roundStandings = value});
+    this.fetching = false;
     return this.roundStandings
   }
   SeasonChange (event :any ) {
     if (event.number){
+      this.fetching = true;
       this.season = event.number.getFullYear();
       this.fetchStandings();
     }

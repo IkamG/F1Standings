@@ -18,14 +18,14 @@ export class StandingsService {
 
 }
 async function fetchStandingsTable(season: number): Promise<StandingsListsEntity[]>{
-  var url = `http://ergast.com/api/f1/${season}/driverStandings.json`;
+  var url = `https://ergast.com/api/f1/${season}/driverStandings.json`;
   var response = await fetch(url);
   var body = await response.json();
 
   var value = body.MRData.StandingsTable.StandingsLists;
   var round:number = +value[0].round;
   for (let index = round-1; index > 0; index--) {
-    var url = `http://ergast.com/api/f1/${season}/${index}/driverStandings.json`;
+    var url = `https://ergast.com/api/f1/${season}/${index}/driverStandings.json`;
     var response = await fetch(url);
     var body = await response.json();
     value.push(...body.MRData.StandingsTable.StandingsLists);

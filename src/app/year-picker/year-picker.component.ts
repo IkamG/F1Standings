@@ -30,7 +30,8 @@ class CustomDateAdapter extends NativeDateAdapter {
 export class YearPickerComponent {
   
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
-
+  maxDate : Date = new Date(Date.now());
+  minDate : Date = new Date (1950,0,1);
   @ViewChild(MatDatepicker) picker : any;
   date = new FormControl();
   constructor() {

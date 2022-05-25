@@ -1,8 +1,15 @@
 export interface driverData {
   name : string;
   series? : raceData[] | null;
+  identifier : string;
   Driver: Driver;
   Constructors?: ConstructorsEntity[] | null;
+}
+export interface racePointData {
+  name : string;
+  postionInRace : string;
+  positionAfterRace : string;
+  points : string;
 }
 export interface raceData {
   value : number;
